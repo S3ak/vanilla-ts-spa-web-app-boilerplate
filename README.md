@@ -80,6 +80,10 @@ This repository is a modern boilerplate starter pack for building front-end web 
 └── .env                    # Environment variables (not committed)
 ```
 
+## API
+
+We use an external API for demonstration purposes: [https://dummyjson.com/docs](https://dummyjson.com/docs) managed by Google.
+
 ## Key Concepts Demonstrated
 
 - **Routing Pattern**: Uses the [URLPattern API](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) for client-side routing.

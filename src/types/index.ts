@@ -8,9 +8,13 @@ export interface User {
   image: string;
 }
 
-export interface CartItem {
-  product: Product;
-  quantity: number;
+export interface Post {
+  id: string;
+  content: string;
+  author: string;
+  timestamp: Date;
+  likes: number;
+  likedBy: Set<string>;
 }
 
 export interface AuthState {
@@ -21,54 +25,9 @@ export interface AuthState {
 }
 
 export interface AppState {
-  products?: Product[];
-  cart?: CartItem[];
+  posts?: Post[];
   auth?: AuthState;
   currentPage?: string;
-  selectedProduct?: Product | null;
-  numberOfItems: number;
-}
-
-export interface ProductResponse {
-  limit: number;
-  products: Product[];
-  skip: number;
-  total: number;
-}
-
-export interface Product {
-  availabilityStatus: AvailabilityStatus;
-  brand?: string;
-  category: Category;
-  description: string;
-  dimensions: Dimensions;
-  discountPercentage: number;
-  id: number;
-  images: string[];
-  meta: Meta;
-  minimumOrderQuantity: number;
-  price: number;
-  rating: number;
-  returnPolicy: ReturnPolicy;
-  reviews: Review[];
-  shippingInformation: string;
-  sku: string;
-  stock: number;
-  tags: string[];
-  thumbnail: string;
-  title: string;
-  warrantyInformation: string;
-  weight: number;
-}
-
-export type AvailabilityStatus = "In Stock" | "Low Stock";
-
-export type Category = "beauty" | "fragrances" | "furniture" | "groceries";
-
-export interface Dimensions {
-  depth: number;
-  height: number;
-  width: number;
 }
 
 export interface Meta {

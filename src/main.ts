@@ -1,6 +1,5 @@
 import "./style.css";
 import { renderRoute } from "./router";
-import { login, logout, UPDATE_ITEMS } from "./services/store/actions";
 import "./services/ws/ws";
 import "./services/chat/chat";
 import {
@@ -10,8 +9,6 @@ import {
 
 // Render initial content based on the current path
 renderRoute(window.location.pathname);
-
-const AppEl = document.getElementById("app-content");
 
 window.onerror = handleGlobalError;
 

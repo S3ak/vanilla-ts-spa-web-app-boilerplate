@@ -3,7 +3,9 @@ import type { AppState } from "../../types";
 const INITIAL_STATE: AppState = {
   posts: [],
   auth: {
-    token: null,
+    refreshToken: "",
+    accessToken: "",
+    apiKey: "",
     isAuthenticated: false,
     isLoggedIn: false,
     user: {

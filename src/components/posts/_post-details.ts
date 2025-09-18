@@ -1,4 +1,5 @@
 import { API_URL } from "../../constants";
+import { get } from "../../services/api/client";
 import { getIdFromUrl } from "../../utils/general";
 import {
   areDOMElementPresent,
@@ -32,7 +33,7 @@ function setup() {
 
     const id = getIdFromUrl();
 
-    if (id) renderProductDetails(id, containerEl);
+    if (id) renderPostDetails(id, containerEl);
   } catch (error) {
     // Log an error message if either element is missing
     console.error(
@@ -55,20 +56,19 @@ function setup() {
 /**
  * Fetches product details from the API.
  *
- * @param {string} [productId=""] - The ID of the product to fetch details for.
+ * @param {string} [postId=""] - The ID of the product to fetch details for.
  * @returns {Promise<ProductDetails>} - The product details data.
  * @throws {Error} If no product ID is supplied or if the fetch operation fails.
  */
-async function fetchProductDetails(productId = "") {
+async function fetchPostDetails(postId = "") {
   try {
-    if (!productId) {
+    if (!postId) {
       throw new Error("No Product Id was supplied");
     }
 
-    const response = await fetch(`${API_URL}/${productId}`);
-    const product = await response.json();
+    const post = await get(`${API_URL}/${postId}`);
 
-    return product;
+    return post;
   } catch (error) {
     console.error((error as Error)?.message);
   }
@@ -81,11 +81,8 @@ async function fetchProductDetails(productId = "") {
  * @param {HTMLElement} containerEl - The container element where the product details will be rendered.
  * @returns {Promise<void>} A promise that resolves when the product details have been rendered.
  */
-async function renderProductDetails(
-  productId: string,
-  containerEl: HTMLElement
-) {
-  const { images, title, price, description } = await fetchProductDetails(
+async function renderPostDetails(productId: string, containerEl: HTMLElement) {
+  const { images, title, price, description } = await fetchPostDetails(
     productId
   );
 
@@ -105,7 +102,10 @@ async function renderProductDetails(
 
   const detailsElWithListener = addFormHandlerToDetailsEl(detailsEl);
   clearNode(containerEl);
-  containerEl.appendChild(detailsElWithListener);
+
+  if (detailsElWithListener) {
+    containerEl.appendChild(detailsElWithListener);
+  }
 }
 
 /**
@@ -192,9 +192,11 @@ function handleFormSubmit(event: SubmitEvent) {
 function addFormHandlerToDetailsEl(
   detailsEl: HTMLElement = document.createElement("div")
 ) {
-  const addToCartForm = detailsEl.querySelector("form");
+  const form = detailsEl.querySelector("form");
 
-  if (addToCartForm) {
-    addToCartForm.addEventListener("submit", handleFormSubmit);
-  }
+  if (!form) return null;
+
+  form.addEventListener("submit", handleFormSubmit);
+
+  return form;
 }

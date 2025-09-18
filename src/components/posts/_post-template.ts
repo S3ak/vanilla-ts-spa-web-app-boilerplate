@@ -13,7 +13,9 @@ export default function productTemplate({
   const detailsUrl = `/post-details.html?${searchParams.toString()}`;
 
   return `
-    <article class="c-product-preview-details animate__animated animate__fadeInUp animate__delay-${index}s" data-productId="${id}" data-component="productPreviewDetails">
+    <article class="c-product-preview-details animate__animated animate__fadeInUp animate__delay-${
+      id + 1
+    }s" data-productId="${id}" data-component="productPreviewDetails">
       <div class="c-product-preview-info">
         <h1 class="c-product-preview-title">
           <a href=${detailsUrl}>${content}</a>

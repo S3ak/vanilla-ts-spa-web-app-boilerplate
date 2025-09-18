@@ -1,8 +1,6 @@
-import type { AppState } from "../types";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import { state } from "../services/store/store";
 import { lazyLoadImgs } from "../utils/lazy-load-img";
 import { APP_CONTAINER_CLASSNAME } from "../constants";
 

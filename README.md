@@ -2,6 +2,19 @@
 
 This repository is a modern boilerplate starter pack for building front-end web applications using TypeScript, ES2025 features, and Vite. It is designed for educational purposes and demonstrates best practices for consuming authenticated APIs, performing CRUD operations, and leveraging the latest advancements in the JavaScript ecosystem.
 
+## Project Assets
+
+- [Production deploy]()
+- [Production Deployment Dashboard](https://app.netlify.com/projects/vanilla-ts-spa-boilerplate/deploys)
+- [Staging deploy]()
+- [staging Deployment Dashboard]()
+- [Design Doc]()
+- [Lo-Fi Design Spec]()
+- [Hi-Fi Design Spec]()
+- [API URL](https://docs.noroff.dev/docs/v2/social/posts)
+- [Analytics dashboard]()
+- [TODOS]()
+
 ## Features
 
 - **TypeScript-first**: Strongly-typed codebase for maintainability and scalability.
@@ -15,6 +28,16 @@ This repository is a modern boilerplate starter pack for building front-end web 
 - **Vite-Powered**: Fast development server and optimized production builds.
 - **Unit Testing**: Built-in support for unit testing with popular frameworks.
 - **Educational Focus**: Clear code structure and comments for learning modern web development.
+
+## Tech Stack
+
+- [Vite](https://nextjs.org/)
+- [Animate CSS](https://animate.style/)
+- [Cypress](https://www.cypress.io/)
+- [Luxon](https://moment.github.io/luxon/#/)
+- [Font Awesome](https://fontawesome.com/search?ic=free)
+- [Prettier](https://prettier.io/) - An opinionated code formatter
+- [Vitest](https://vitest.dev/) - Vite-native unit testing framework
 
 ## Getting Started
 

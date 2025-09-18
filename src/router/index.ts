@@ -1,7 +1,7 @@
+import type { AppState } from "../types";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import NotFoundPage from "../pages/NotFoundPage";
-import type { AppState } from "../types";
 import { state } from "../services/store/store";
 import { lazyLoadImgs } from "../utils/lazy-load-img";
 import { APP_CONTAINER_CLASSNAME } from "../constants";
@@ -15,10 +15,6 @@ const PATHS = {
     url: "/about",
     component: AboutPage,
   },
-  // profile: {
-  //   url: "/profile",
-  //   component: ProfilePage,
-  // },
 } as const;
 
 /**
@@ -31,7 +27,6 @@ const PATHS = {
  */
 export default async function router(
   currentPath = "",
-  state: AppState,
   routes = PATHS
 ): Promise<string> {
   // Find the matching route by path
@@ -66,7 +61,7 @@ export async function renderRoute(path?: string | undefined) {
 
   if (!path || !contentContainer) return;
 
-  contentContainer.innerHTML = await router(path, state);
+  contentContainer.innerHTML = await router(path);
 
   // Run any code that needs DOM elements here after route render;
   lazyLoadImgs();

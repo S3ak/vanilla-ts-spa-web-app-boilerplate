@@ -1,3 +1,5 @@
+import type { Post } from "./dummyjson-types";
+
 export interface User {
   id: number;
   firstName: string;
@@ -8,20 +10,14 @@ export interface User {
   image: string;
 }
 
-export interface Post {
-  id: string;
-  content: string;
-  author: string;
-  timestamp: Date;
-  likes: number;
-  likedBy: Set<string>;
-}
-
 export interface AuthState {
   user: User | null;
-  token: string | null;
   isAuthenticated: boolean;
   isLoggedIn: boolean;
+  // https://docs.noroff.dev/docs/v2/authentication
+  accessToken: string;
+  refreshToken: string;
+  apiKey: string;
 }
 
 export interface AppState {
@@ -35,21 +31,6 @@ export interface Meta {
   createdAt: Date;
   qrCode: string;
   updatedAt: Date;
-}
-
-export type ReturnPolicy =
-  | "No return policy"
-  | "30 days return policy"
-  | "60 days return policy"
-  | "7 days return policy"
-  | "90 days return policy";
-
-export interface Review {
-  comment: string;
-  date: Date;
-  rating: number;
-  reviewerEmail: string;
-  reviewerName: string;
 }
 
 // Create a clean object to send to our service

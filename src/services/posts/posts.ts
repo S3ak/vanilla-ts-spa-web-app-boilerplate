@@ -1,13 +1,16 @@
+import { API_URL } from "../../constants";
+import type { Post, PostsResponse } from "../../types/dummyjson-types";
 import { get } from "../api/client";
 
-const postsApiEndpoint = "/posts";
+const postsApiEndpoint = API_URL + "/posts";
 
 /**
- * Fetches all poara.
+ * Fetches all posts.
  * @returns {Promise<Array>} A promise that resolves to an array of posts.
  */
-export function getAllPosts() {
-  return get(postsApiEndpoint);
+export async function getAllPosts(): Promise<PostsResponse> {
+  const data = await get<PostsResponse>(postsApiEndpoint);
+  return data;
 }
 
 /**
@@ -15,6 +18,7 @@ export function getAllPosts() {
  * @param {string|number} id The ID of the post to fetch.
  * @returns {Promise<Object>} A promise that resolves to the post object.
  */
-export function getPostById(id: string | number) {
-  return get(`${postsApiEndpoint}/${id}`);
+export async function getPostById(id: Post["id"]): Promise<Post> {
+  const data = await get<Post>(`${postsApiEndpoint}/${id}`);
+  return data;
 }

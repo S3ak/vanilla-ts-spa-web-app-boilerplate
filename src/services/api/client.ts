@@ -1,4 +1,5 @@
 import { API_URL } from "../../constants";
+import { getLocalItem } from "../../utils/storage";
 import { ApiError } from "../error/error";
 
 interface ApiClientOptions extends RequestInit {
@@ -49,8 +50,9 @@ async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
     }
   }
 
-  const apiKey = localStorage.getItem("apiKey");
-  const accessToken = localStorage.getItem("accessToken");
+  const apiKey = getLocalItem("apiKey");
+  const accessToken = getLocalItem("accessToken");
+
   if (apiKey)
     (config.headers as Record<string, string>)[API_KEY_HEADER] = apiKey;
   if (accessToken)
@@ -97,7 +99,8 @@ async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
 }
 
 // Now we can export helper methods
-export const get = (endpoint: Endpoint) => apiClient(endpoint);
+export const get = <T = unknown>(endpoint: Endpoint): Promise<T> =>
+  apiClient(endpoint);
 
 /**
  * Sends a POST request to the specified API endpoint with the provided request body.

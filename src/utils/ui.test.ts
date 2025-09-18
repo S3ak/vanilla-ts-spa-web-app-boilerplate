@@ -84,7 +84,7 @@ describe("getDOMElements", () => {
   it("returns false and logs error if no elements found", () => {
     const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     const result = getDOMElements([], container);
-    expect(result).toBe(false);
+    expect(result).toHaveLength(0);
     expect(spy).toHaveBeenCalled();
     spy.mockRestore();
   });

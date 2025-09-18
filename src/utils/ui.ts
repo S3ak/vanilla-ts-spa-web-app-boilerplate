@@ -39,7 +39,7 @@ export function clearNode(el: HTMLElement) {
 export const getDOMElements = (
   ids: string[] = [],
   container: HTMLElement | Document = document
-) => {
+): HTMLElement[] | [] => {
   if (!Array.isArray(ids) || !ids.every((id) => typeof id === "string")) {
     throw new Error("All IDs must be strings");
   }
@@ -64,7 +64,7 @@ export const getDOMElements = (
       )
     );
 
-    return false;
+    return [];
   }
 
   return DOMElements;

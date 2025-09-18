@@ -1,11 +1,11 @@
-import { CURRENCY, ERROR_MESSAGE_DEFAULT, API_URL } from "../constants.mjs";
-import { addToCart } from "../cart.mjs";
+import { API_URL } from "../../constants";
+import { getIdFromUrl } from "../../utils/general";
 import {
   areDOMElementPresent,
   clearNode,
   createHTML,
   getDOMElements,
-} from "../utils.mjs";
+} from "../../utils/ui";
 
 const DOMElements = getDOMElements(["#js-product-details"], document);
 const [containerEl] = DOMElements;
@@ -32,12 +32,12 @@ function setup() {
 
     const id = getIdFromUrl();
 
-    renderProductDetails(id, containerEl);
+    if (id) renderProductDetails(id, containerEl);
   } catch (error) {
     // Log an error message if either element is missing
     console.error(
       "Could'nt find DOM elements. Please check the HTML",
-      error?.message
+      (error as Error)?.message
     );
   }
 }
@@ -70,7 +70,7 @@ async function fetchProductDetails(productId = "") {
 
     return product;
   } catch (error) {
-    console.error(ERROR_MESSAGE_DEFAULT, error?.message);
+    console.error((error as Error)?.message);
   }
 }
 
@@ -81,7 +81,10 @@ async function fetchProductDetails(productId = "") {
  * @param {HTMLElement} containerEl - The container element where the product details will be rendered.
  * @returns {Promise<void>} A promise that resolves when the product details have been rendered.
  */
-async function renderProductDetails(productId, containerEl) {
+async function renderProductDetails(
+  productId: string,
+  containerEl: HTMLElement
+) {
   const { images, title, price, description } = await fetchProductDetails(
     productId
   );
@@ -95,6 +98,11 @@ async function renderProductDetails(productId, containerEl) {
   });
 
   const detailsEl = createHTML(template);
+
+  if (!(detailsEl instanceof HTMLElement)) {
+    throw new Error("Failed to create product details element.");
+  }
+
   const detailsElWithListener = addFormHandlerToDetailsEl(detailsEl);
   clearNode(containerEl);
   containerEl.appendChild(detailsElWithListener);
@@ -131,7 +139,6 @@ function detailsTemplate({
 
       <div class="product-info">
         <h2>${title}</h2>
-        <p class="price">${price} ${CURRENCY}</p>
         <p class="description">${description}</p>
 
         <form class="purchase-options" name="addToCartForm">
@@ -169,44 +176,25 @@ function detailsTemplate({
  *
  * @param {Event} event - The form submission event.
  */
-function handleFormSubmit(event) {
+function handleFormSubmit(event: SubmitEvent) {
   // NB: Prevent the form from refreshing the page;
   event.preventDefault();
 
-  const formData = new FormData(event.target);
+  if (!event.target) {
+    throw new Error("Form could not submit");
+  }
 
-  addToCart({
-    id: getIdFromUrl(),
-    imgUrl: formData.get("imgUrl"),
-    price: formData.get("price"),
-    title: formData.get("title"),
-    quantity: Number(formData.get("quantity")),
-  });
+  const _formData = new FormData(event.target as HTMLFormElement);
+
+  // Do something
 }
 
-function getIdFromUrl() {
-  /**
-   * Extracts the 'id' parameter from the URL's query string.
-   * @url https://mollify.noroff.dev/content/feu1/javascript-1/module-5/api-advanced/url-parameters?nav=
-   */
-  const parameterString = window.location.search;
-
-  /**
-   * Creates a URLSearchParams object to work with the query parameters.
-   */
-  const searchParameters = new URLSearchParams(parameterString);
-
-  /**
-   * Retrieves the value of the 'id' parameter from the query string above.
-   * @type {string | null}
-   */
-  const id = searchParameters.get("id");
-
-  return id;
-}
-
-function addFormHandlerToDetailsEl(detailsEl = document.createElement()) {
+function addFormHandlerToDetailsEl(
+  detailsEl: HTMLElement = document.createElement("div")
+) {
   const addToCartForm = detailsEl.querySelector("form");
-  addToCartForm.addEventListener("submit", handleFormSubmit);
-  return detailsEl;
+
+  if (addToCartForm) {
+    addToCartForm.addEventListener("submit", handleFormSubmit);
+  }
 }

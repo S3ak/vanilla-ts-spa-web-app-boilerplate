@@ -5,6 +5,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import type { AppState } from "../types";
 import { state } from "../services/store/store";
 import { lazyLoadImgs } from "../utils/lazy-load-img";
+import { APP_CONTAINER_CLASSNAME } from "../constants";
 
 const PATHS = {
   home: {
@@ -52,10 +53,21 @@ export default async function router(
   return html;
 }
 
+/**
+ * Renders the content for a given route path by updating the main content container.
+ *
+ * @param path - The optional route path to render. If not provided, uses the current window location pathname.
+ * @returns A promise that resolves when the route content has been rendered and any post-render logic has executed.
+ *
+ * @remarks
+ * - Updates the inner HTML of the main application container with the result of the router function.
+ * - Executes any post-render logic (e.g., lazy loading images) after the content is rendered.
+ * - If the path or content container is not available, the function exits early.
+ */
 export async function renderRoute(path?: string | undefined) {
   path = path ?? window.location.pathname;
   // Get the element where content will be rendered
-  const contentContainer = document.getElementById("app-content");
+  const contentContainer = document.getElementById(APP_CONTAINER_CLASSNAME);
 
   if (!path || !contentContainer) return;
 

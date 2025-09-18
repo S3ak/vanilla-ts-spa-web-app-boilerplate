@@ -1,4 +1,4 @@
-import { ValidationError } from "../services/error/error";
+import { ValidationError } from "../types";
 
 function registerUser(username: string, password: string) {
   if (username.length < 3) {
@@ -20,7 +20,7 @@ try {
   registerUser("my", "mypassword123");
 } catch (error: unknown) {
   if (error instanceof ValidationError) {
-    alert(error.message);
+    alert((error as ValidationError).message);
   } else if (
     typeof error === "object" &&
     error !== null &&

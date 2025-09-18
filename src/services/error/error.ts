@@ -37,6 +37,20 @@ export class ApiError extends Error {
   }
 }
 
+/**
+ * Handles uncaught global errors by logging detailed information and sending error analytics.
+ *
+ * This function is intended to be used as a global error handler (e.g., assigned to `window.onerror`).
+ * It logs the error details to the console and sends a generic error report to an analytics service.
+ * Optionally, you can integrate with external logging services (e.g., Sentry) as needed.
+ *
+ * @param event - The error event or message string.
+ * @param source - (Optional) The source file where the error occurred.
+ * @param lineno - (Optional) The line number in the source file where the error occurred.
+ * @param colno - (Optional) The column number in the source file where the error occurred.
+ * @param error - (Optional) The Error object associated with the error event.
+ * @returns Returns `true` to prevent the browser's default error handling.
+ */
 export function handleGlobalError(
   event: string | Event,
   source?: string,

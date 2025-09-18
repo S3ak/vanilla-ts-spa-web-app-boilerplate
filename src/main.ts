@@ -1,7 +1,5 @@
 import "./style.css";
 import { renderRoute } from "./router";
-import "./services/ws/ws";
-import "./services/chat/chat";
 import {
   handleGlobalError,
   catchUnhandledRejection,

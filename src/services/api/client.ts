@@ -7,6 +7,7 @@ interface ApiClientOptions extends RequestInit {
 
 type Endpoint = string;
 
+// TODO: Insert correct API key from storage.
 const API_KEY_HEADER = "Dummy-API-Key";
 
 /**

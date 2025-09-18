@@ -13,6 +13,7 @@ This repository is a modern boilerplate starter pack for building front-end web 
 - **API Integration**: Example code for consuming authenticated REST APIs.
 - **CRUD Operations**: Templates for Create, Read, Update, and Delete actions.
 - **Vite-Powered**: Fast development server and optimized production builds.
+- **Unit Testing**: Built-in support for unit testing with popular frameworks.
 - **Educational Focus**: Clear code structure and comments for learning modern web development.
 
 ## Getting Started
@@ -25,16 +26,20 @@ This repository is a modern boilerplate starter pack for building front-end web 
 ### Installation
 
 1. **Clone the repository:**
+
    ```sh
    git clone https://github.com/S3ak/vanilla-ts-spa-web-app-boilerplate.git
    cd vanilla-ts-spa-web-app-boilerplate
    ```
+
 2. **Install dependencies:**
+
    ```sh
    npm install
    # or
    yarn install
    ```
+
 3. **Create a `.env` file:**
    Copy the example below and adjust as needed:
 
@@ -56,13 +61,6 @@ This repository is a modern boilerplate starter pack for building front-end web 
    yarn dev
    ```
 
-5. **Build for production:**
-   ```sh
-   npm run build
-   # or
-   yarn build
-   ```
-
 ## Project Structure
 
 ```
@@ -72,7 +70,6 @@ This repository is a modern boilerplate starter pack for building front-end web 
 ├── public/                 # Static assets
 │   └── vite.svg
 ├── src/                    # Source code
-│   ├── counter.ts          # Example TypeScript module
 │   ├── main.ts             # App entry point
 │   ├── style.css           # Styles
 │   ├── typescript.svg      # Example asset
@@ -82,7 +79,7 @@ This repository is a modern boilerplate starter pack for building front-end web 
 
 ## API
 
-We use an external API for demonstration purposes: [https://dummyjson.com/docs](https://dummyjson.com/docs) managed by Google.
+I use an external API for demonstration purposes: [https://dummyjson.com/docs](https://dummyjson.com/docs) managed by Google.
 
 ## Key Concepts Demonstrated
 

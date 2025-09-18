@@ -1,4 +1,3 @@
-import ProductsPage from "../pages/ProductsPage";
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -11,10 +10,6 @@ const PATHS = {
   home: {
     url: "/",
     component: HomePage,
-  },
-  products: {
-    url: "/products",
-    component: ProductsPage,
   },
   about: {
     url: "/about",
@@ -47,7 +42,7 @@ export default async function router(
   let html = await NotFoundPage();
 
   if (currentRoute) {
-    html = await currentRoute.component(state);
+    html = await currentRoute.component();
   }
 
   return html;

@@ -1,8 +1,7 @@
-import { API_URL } from "../../constants";
 import type { Post, PostsResponse } from "../../types/dummyjson-types";
 import { get } from "../api/client";
 
-const postsApiEndpoint = API_URL + "/posts";
+const postsApiEndpoint = "/posts";
 
 /**
  * Fetches all posts.

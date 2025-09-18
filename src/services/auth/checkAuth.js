@@ -21,3 +21,7 @@ export function isUserLoggedIn() {
 export async function loginUser(_credentials) {
   // TODO: https://lms.noroff.no/mod/book/view.php?id=123585&chapterid=61404
 }
+
+export function getAccessToken() {
+  return getLocalItem(ACCESS_TOKEN);
+}

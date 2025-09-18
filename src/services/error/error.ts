@@ -114,7 +114,7 @@ export function catchUnhandledRejection(event: PromiseRejectionEvent) {
  */
 async function logErrorAnalytics(errorReport: ErrorReport) {
   try {
-    await post(`${ANALYTICS_ENDPOINT}`, errorReport);
+    await post(`/${ANALYTICS_ENDPOINT}`, errorReport);
   } catch (error) {
     console.log(error);
   }

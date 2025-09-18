@@ -86,8 +86,9 @@ async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
       throw new ApiError(message, response.status);
     }
 
-    return await response.json();
+    return responseData;
   } catch (error) {
+    debugger;
     // If it's already our custom error, just re-throw it.
     // Otherwise, wrap it in a generic error.
     if (error instanceof ApiError) {

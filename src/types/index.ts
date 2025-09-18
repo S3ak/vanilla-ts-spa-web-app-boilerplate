@@ -21,7 +21,7 @@ export interface AuthState {
 }
 
 export interface AppState {
-  posts?: Post[];
+  posts: Post[];
   auth?: AuthState;
   currentPage?: string;
 }

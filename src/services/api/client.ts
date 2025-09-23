@@ -9,7 +9,9 @@ interface ApiClientOptions extends RequestInit {
 type Endpoint = string;
 
 // TODO: Insert correct API key from storage.
-const API_KEY_HEADER = "Dummy-API-Key";
+
+// const API_KEY_HEADER = "Dummy-API-Key";
+const API_KEY_HEADER = "X-Noroff-API-Key";
 
 /**
  * Makes an HTTP request to the specified API endpoint with the given options.
@@ -59,6 +61,12 @@ async function apiClient(endpoint: string, options: ApiClientOptions = {}) {
     (config.headers as Record<string, string>)[
       "Authorization"
     ] = `Bearer ${accessToken}`;
+
+  // Debug log for headers
+  console.log("API Request Headers:", {
+    [API_KEY_HEADER]: apiKey,
+    Authorization: accessToken ? `Bearer ${accessToken}` : undefined,
+  });
 
   try {
     const response = await fetch(API_URL + endpoint, config);
@@ -128,3 +136,85 @@ export const put = <T>(endpoint: Endpoint, body: T) =>
   apiClient(endpoint, { method: "PUT", body: JSON.stringify(body) });
 export const del = (endpoint: Endpoint) =>
   apiClient(endpoint, { method: "DELETE" });
+
+//  changes done by Hammad.
+
+/**
+ * Registers a new user using the Noroff Auth API.
+ * @param data Object containing name, email, and password
+ * @returns API response JSON
+ */
+export async function registerUser(data: {
+  name: string;
+  email: string;
+  password: string;
+}) {
+  const response = await fetch("https://v2.api.noroff.dev/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+/**
+ * Logs in a user using the Noroff Auth API.
+ * @param data Object containing email and password
+ * @returns API response JSON
+ */
+export async function loginUser(data: { email: string; password: string }) {
+  const response = await fetch("https://v2.api.noroff.dev/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+/**
+ * Fetches a new API key using the Noroff Auth API.
+ * @param accessToken The user's access token
+ * @returns The API key string
+ */
+
+/* export async function fetchApiKey(
+  accessToken: string
+): Promise<string | undefined> {
+  const response = await fetch(
+    "https://v2.api.noroff.dev/auth/create-api-key",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  debugger;
+  return data.key || data.apiKey;
+} */
+export async function fetchApiKey(
+  accessToken: string
+): Promise<string | undefined> {
+  const response = await fetch(
+    "https://v2.api.noroff.dev/auth/create-api-key",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch API key: ${response.status} ${response.statusText}`
+    );
+  }
+
+  const data = await response.json();
+
+  console.log("API raw response:", data); // 🔍 check structure
+  return data?.data?.key;
+}

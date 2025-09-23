@@ -1,15 +1,21 @@
 import type { Post, PostsResponse } from "../../types/dummyjson-types";
 import { get } from "../api/client";
 
-const postsApiEndpoint = "/posts";
+const postsApiEndpoint = "/social/posts";
 
 /**
  * Fetches all posts.
  * @returns {Promise<Array>} A promise that resolves to an array of posts.
  */
-export async function getAllPosts(): Promise<PostsResponse> {
-  const data = await get<PostsResponse>(postsApiEndpoint);
-  return data;
+export async function getAllPosts(): Promise<Post[]> {
+  try {
+    const response = await get<{ data: Post[] }>(postsApiEndpoint);
+    // Noroff API returns { data: [...] }
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw error;
+  }
 }
 
 /**

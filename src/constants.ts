@@ -1,5 +1,5 @@
-export const BASE_URL = import.meta.env.BASE_URL || "https://dummyjson.com";
-export const API_URL = import.meta.env.API_URL || "https://dummyjson.com";
+export const BASE_URL = import.meta.env.BASE_URL || "";
+export const API_URL = import.meta.env.API_URL || "https://v2.api.noroff.dev";
 export const ANALYTICS_ENDPOINT =
   import.meta.env.ANALYTICS_ENDPOINT || "c/eb3d-d728-4cdf-ab19";
 export const FUNC_ERROR_TEXT = "Expected a function";

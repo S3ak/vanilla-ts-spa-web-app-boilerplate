@@ -1,20 +1,5 @@
 // Attach SPA navigation event handler to header links once at startup
 document.addEventListener("DOMContentLoaded", () => {
-  // Logout button handler and visibility
-  const logoutBtn = document.getElementById("js-logout-btn");
-  if (logoutBtn) {
-    if (!localStorage.getItem("accessToken")) {
-      logoutBtn.style.display = "none";
-    } else {
-      logoutBtn.style.display = "";
-    }
-    logoutBtn.addEventListener("click", function (event) {
-      event.preventDefault();
-      localStorage.clear();
-      history.pushState({ path: "/login" }, "", "/login");
-      renderRoute("/login");
-    });
-  }
   const navLinks: NodeListOf<HTMLAnchorElement> =
     document.querySelectorAll("#js-primary-nav a");
   navLinks.forEach((link) =>
@@ -27,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
   );
-
 });
 import "./style.css";
 import { renderRoute } from "./router";

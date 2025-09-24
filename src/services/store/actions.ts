@@ -11,11 +11,3 @@ export function login(user: User): void {
 
   renderRoute(); // The magic! Re-render the current page.
 }
-
-export function logout() {
-  if (state.auth) {
-    state.auth.isLoggedIn = false;
-    state.auth.user = null;
-  }
-  renderRoute(); // Re-render again.
-}

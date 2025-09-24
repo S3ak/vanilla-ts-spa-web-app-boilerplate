@@ -1,6 +1,8 @@
 import HomePage from "../pages/HomePage";
 import AboutPage from "../pages/AboutPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
 import { lazyLoadImgs } from "../utils/lazy-load-img";
 import { APP_CONTAINER_CLASSNAME } from "../constants";
 
@@ -12,6 +14,14 @@ const PATHS = {
   about: {
     url: "/about",
     component: AboutPage,
+  },
+  login: {
+    url: "/login",
+    component: LoginPage,
+  },
+  register: {
+    url: "/register",
+    component: RegisterPage,
   },
 } as const;
 
@@ -35,7 +45,8 @@ export default async function router(
   let html = await NotFoundPage();
 
   if (currentRoute) {
-    html = await currentRoute.component();
+    const result = await currentRoute.component();
+    html = typeof result === "string" ? result : "";
   }
 
   return html;
@@ -60,6 +71,22 @@ export async function renderRoute(path?: string | undefined) {
   if (!path || !contentContainer) return;
 
   contentContainer.innerHTML = await router(path);
+
+  // Re-attach SPA navigation listeners to nav links
+  const navLinks: NodeListOf<HTMLAnchorElement> =
+    document.querySelectorAll("#js-primary-nav a");
+  navLinks.forEach((link) =>
+    link.addEventListener("click", function navigate(event) {
+      event.preventDefault();
+      let path: string | null;
+      const el = event?.target as HTMLAnchorElement;
+      path = el.getAttribute("href");
+      if (typeof path === "string") {
+        history.pushState({ path: path }, "", path);
+        renderRoute(path);
+      }
+    })
+  );
 
   // Run any code that needs DOM elements here after route render;
   lazyLoadImgs();

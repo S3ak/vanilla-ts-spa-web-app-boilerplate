@@ -1,3 +1,18 @@
+// Attach SPA navigation event handler to header links once at startup
+document.addEventListener("DOMContentLoaded", () => {
+  const navLinks: NodeListOf<HTMLAnchorElement> =
+    document.querySelectorAll("#js-primary-nav a");
+  navLinks.forEach((link) =>
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      const path = link.getAttribute("href");
+      if (typeof path === "string") {
+        history.pushState({ path: path }, "", path);
+        renderRoute(path);
+      }
+    })
+  );
+});
 import "./style.css";
 import { renderRoute } from "./router";
 import {
@@ -36,29 +51,4 @@ window.addEventListener("popstate", (event) => {
 //   });
 // }
 
-/**
- * Add event listeners to our links
- */
-const linkEls: NodeListOf<HTMLAnchorElement> =
-  document.querySelectorAll("#js-primary-nav a");
-
-if (linkEls) {
-  linkEls.forEach((link) => link.addEventListener("click", navigate));
-}
-
-function navigate(event: MouseEvent) {
-  event.preventDefault();
-  let path: string | null;
-
-  const el = event?.target as HTMLAnchorElement;
-
-  path = el.getAttribute("href");
-
-  if (typeof path === "string") {
-    // Change the URL in the address bar
-    history.pushState({ path: path }, "", path);
-
-    // Update the content based on the path
-    renderRoute(path);
-  }
-}
+// Navigation event handler is now managed in router/index.ts after each route render.
